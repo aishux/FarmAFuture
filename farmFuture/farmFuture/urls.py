@@ -22,9 +22,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.loginpage, name='loginpage'),
-    path('postsign/', views.postsign, name='postsign'),
-    path('logout/', views.logout, name='logout'),
+    path('home/', views.home, name='home'),
+    path('login/', views.handleLogin, name='login'),
+    path('signupuser/', views.handleSignUpUser, name='signupuser'),
+    path('logout/', views.handleLogout, name='logout'),
     
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
