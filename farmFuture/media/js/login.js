@@ -9,3 +9,29 @@ signUpButton.addEventListener('click', () => {
 signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
+
+function farmer_details(){
+	check_button = document.getElementById("is_farmer")
+	if (check_button.checked == true){
+		document.getElementById("labeladharcard").hidden = false
+		document.getElementById("aadhaarcard").hidden = false
+		document.getElementById("labelfarmerid").hidden = false
+		document.getElementById("farmerid").hidden = false
+
+		document.getElementById("aadhaarcard").required = true
+		document.getElementById("farmerid").required = true
+
+		document.getElementById("signupForm").action = "/signupfarmer/"
+	}
+	else{
+		document.getElementById("labeladharcard").hidden = true
+		document.getElementById("aadhaarcard").hidden = true
+		document.getElementById("labelfarmerid").hidden = true
+		document.getElementById("farmerid").hidden = true
+
+		document.getElementById("aadhaarcard").required = false
+		document.getElementById("farmerid").required = false
+
+		document.getElementById("signupForm").action = "/signupuser/"
+	}
+}

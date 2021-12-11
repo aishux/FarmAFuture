@@ -7,3 +7,6 @@ class WebUser(models.Model):
     id = models.TextField(primary_key=True)
     full_name = models.CharField(max_length=100)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    request_farmer = models.BooleanField(default=False)
+    farmer_id = models.CharField(max_length=200, default="")
+    aadhaar_link = models.URLField(default="")

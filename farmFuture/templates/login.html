@@ -20,13 +20,21 @@
 
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="{% url 'signupuser' %}" method="POST">{% csrf_token %}
+            <form action="{% url 'signupuser' %}" method="POST" id="signupForm" enctype="multipart/form-data">{% csrf_token %}
                 <h1>Create Account</h1>
                 
                 <span>Use your email for registration</span>
                 <input type="text" placeholder="Full Name" name="fullname" required/>
                 <input type="email" placeholder="Email" name="email" required/>
                 <input type="password" placeholder="Password" name="password" required/>
+                <label for="adharcard" id="labeladharcard" hidden>Upload Aadhar Card:</label>
+                <input type="file" placeholder="Aadhaar Card" name="aadhaarcard" id="aadhaarcard" hidden/>
+                <label for="farmerid" id="labelfarmerid" hidden>Enter your Farmer ID: </label>
+                <input type="text" placeholder="Farmer ID" name="farmerid" id="farmerid" hidden/>
+                <div style="width: 80%;padding: 12px">
+                    <label for="is_farmer">Are you a Farmer?</label>
+                    <input type="checkbox" style="width: 24% !important;padding-top: 0px !important;margin-top: 2px !important;" name="is_farmer" id="is_farmer" onclick="farmer_details()"/>
+                </div>
                 <button type="submit">Sign Up</button>
             </form>
         </div>

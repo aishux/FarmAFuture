@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from farmapp.models import WebUser
 from django.contrib.auth import models
+from django.core.files.storage import default_storage
 
 config = {
     'apiKey': "AIzaSyCByllLto91nY_iGjo36nFzFzlZ6QFZPBI",
@@ -18,6 +19,7 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
+storage = firebase.storage()
 
 
 def home(request):
@@ -57,6 +59,28 @@ def handleSignUpUser(request):
         password = request.POST.get("password")
         new_user = authe.create_user_with_email_and_password(email, password)
         web_user = WebUser(id=new_user["localId"], full_name=full_name, group=models.Group.objects.filter(name="NormalUser")[0])
+        web_user.save()
+    return HttpResponseRedirect(reverse("home"))
+
+
+def handleSignUpFarmer(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        full_name = request.POST.get("fullname")
+        password = request.POST.get("password")
+        farmer_id = request.POST.get("farmerid")
+        aadhaar_card = request.FILES.get("aadhaarcard")
+
+        new_user = authe.create_user_with_email_and_password(email, password)
+
+        file_name = new_user["localId"] + "_aadhaar" + ".pdf"
+
+        default_storage.save(file_name, aadhaar_card)
+        storage.child("aadhaars/" + file_name).put("media/" + file_name)
+        default_storage.delete(file_name)
+
+        web_user = WebUser(id=new_user["localId"], full_name=full_name, farmer_id=farmer_id, aadhaar_link="https://firebasestorage.googleapis.com/v0/b/farm-a-future.appspot.com/o/aadhaars%2F{}_aadhaar.pdf?alt=media".format(new_user["localId"]), request_farmer=True, group=models.Group.objects.filter(name="NormalUser")[0])
+
         web_user.save()
     return HttpResponseRedirect(reverse("home"))
 
