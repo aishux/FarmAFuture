@@ -70,6 +70,7 @@ def handleSignUpFarmer(request):
         password = request.POST.get("password")
         farmer_id = request.POST.get("farmerid")
         aadhaar_card = request.FILES.get("aadhaarcard")
+        account_address = request.POST.get("accadd")
 
         new_user = authe.create_user_with_email_and_password(email, password)
 
@@ -79,7 +80,14 @@ def handleSignUpFarmer(request):
         storage.child("aadhaars/" + file_name).put("media/" + file_name)
         default_storage.delete(file_name)
 
-        web_user = WebUser(id=new_user["localId"], full_name=full_name, farmer_id=farmer_id, aadhaar_link="https://firebasestorage.googleapis.com/v0/b/farm-a-future.appspot.com/o/aadhaars%2F{}_aadhaar.pdf?alt=media".format(new_user["localId"]), request_farmer=True, group=models.Group.objects.filter(name="NormalUser")[0])
+        web_user = WebUser(
+            id=new_user["localId"], 
+            full_name=full_name,
+            farmer_id=farmer_id,
+            aadhaar_link="https://firebasestorage.googleapis.com/v0/b/farm-a-future.appspot.com/o/aadhaars%2F{}_aadhaar.pdf?alt=media".format(new_user["localId"]),
+            request_farmer=True,
+            account_address=account_address,
+            group=models.Group.objects.filter(name="NormalUser")[0])
 
         web_user.save()
     return HttpResponseRedirect(reverse("home"))
@@ -89,3 +97,7 @@ def handleLogout(request):
     auth.logout(request)
     authe.current_user = None
     return HttpResponseRedirect(reverse("home"))
+
+
+def shop(request):
+    return render(request, "index.html")

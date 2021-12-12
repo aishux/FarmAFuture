@@ -27,4 +27,5 @@ urlpatterns = [
     path('signupuser/', views.handleSignUpUser, name='signupuser'),
     path('signupfarmer/', views.handleSignUpFarmer, name='signupfarmer'),
     path('logout/', views.handleLogout, name='logout'),
+    path('shop/', views.shop, name='shop'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

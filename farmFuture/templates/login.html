@@ -29,8 +29,8 @@
                 <input type="password" placeholder="Password" name="password" required/>
                 <label for="adharcard" id="labeladharcard" hidden>Upload Aadhar Card:</label>
                 <input type="file" placeholder="Aadhaar Card" name="aadhaarcard" id="aadhaarcard" hidden/>
-                <label for="farmerid" id="labelfarmerid" hidden>Enter your Farmer ID: </label>
                 <input type="text" placeholder="Farmer ID" name="farmerid" id="farmerid" hidden/>
+                <input type="text" placeholder="Account Address" name="accadd" id="accadd" hidden/>
                 <div style="width: 80%;padding: 12px">
                     <label for="is_farmer">Are you a Farmer?</label>
                     <input type="checkbox" style="width: 24% !important;padding-top: 0px !important;margin-top: 2px !important;" name="is_farmer" id="is_farmer" onclick="farmer_details()"/>
@@ -64,6 +64,9 @@
     </div>
 
     <script src="/media/js/login.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="/media/js/shop.js"></script>
 </body>
 
 </html>

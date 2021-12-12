@@ -10,3 +10,4 @@ class WebUser(models.Model):
     request_farmer = models.BooleanField(default=False)
     farmer_id = models.CharField(max_length=200, default="")
     aadhaar_link = models.URLField(default="")
+    account_address = models.CharField(max_length=50, default="")
