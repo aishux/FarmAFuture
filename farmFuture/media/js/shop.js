@@ -6,11 +6,13 @@ const address_farm_operations = "0xfbe1b9a1575D547a4DC166d2101f0219Ac5EDcF3"
 
 const web = new Web3("https://rinkeby.infura.io/v3/384b2420ae804f5ca4b5d6aa630f3c7b")
 
+
 $.ajax({
     url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x6fD362561e53F31FE9ddD31Caf721FAa62907781&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
     dataType: "json",
     success: function (data) {
         token_contract = new web.eth.Contract(JSON.parse(data.result), address_token_contract)
+        localStorage.setItem('token_contract', JSON.stringify([JSON.parse(data.result), address_token_contract]))
     }
 });
 
@@ -20,6 +22,7 @@ $.ajax({
     success: function (data) {
         operations_contract = new web.eth.Contract(JSON.parse(data.result), address_farm_operations)
         getAllGoods()
+        localStorage.setItem('operations_contract', JSON.stringify([JSON.parse(data.result), address_farm_operations]))
     }
 });
 

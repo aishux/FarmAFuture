@@ -120,4 +120,6 @@ def update_cart(request):
     get_cart.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-# LJgMhoPm40UYaQvHdqoHD4aesx02
+
+def user_profile(request):
+    return render(request, "user_profile.html")

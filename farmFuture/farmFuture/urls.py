@@ -29,4 +29,5 @@ urlpatterns = [
     path('logout/', views.handleLogout, name='logout'),
     path('shop/', views.shop, name='shop'),
     path('ajax/cartUpdate/', views.update_cart, name='updatecart'),
+    path('userprofile/', views.user_profile, name='userprofile'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

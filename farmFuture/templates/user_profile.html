@@ -1,0 +1,120 @@
+{% extends 'basic.html' %} {% block title %}Your Profile{% endblock %}
+
+{% block css %}
+  .card {
+    margin: 0 auto;
+    width: 300px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14), 0 10px 10px -4px rgba(0, 0, 0, 0.09);
+    margin-bottom: 25px;
+    float: left;
+    margin-left: 25px; 
+  
+  }
+  
+  .card-content {
+    padding: 15px 20px 10px;;
+    color: #4a4a4a;
+  }
+  
+  .balance {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .balance-right {
+    text-align: right;
+  }
+  
+  .currency {
+    font-size: 50px;
+    font-weight: 200;
+    line-height: 50px;
+  }
+  
+  .balance-title {
+    font-size: 34px;
+  }
+  
+  .balance-amount {
+    font-size: 80px;
+  }
+  
+  .separator {
+    margin-top: 20px;
+    margin-bottom: 6px;
+    border-bottom: solid 1px rgba(151, 151, 151, 0.2);
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: right;
+    cursor: pointer;
+    
+    font-size: 23px;
+    font-weight: 600;
+    color: rgba(74, 74, 74, 0.4);
+    transition: 3.3s;
+    
+  }
+  
+  .actions a {
+    transition: color 0.2s ease;
+  }
+  
+  .actions a:hover {
+    color: rgba(74, 74, 74, 0.5);
+  }
+
+  .orange {
+    background-color: #e8893c;
+    width: 30%;
+    height: 20%;
+    margin: 100px;
+  }
+
+  .orange .card-content{
+    color: #fff;
+  }
+
+  .orange .actions{
+    color: rgba(256, 256, 256, .8);
+  }
+
+  .orange .actions a:hover{
+    color: rgba(256, 256, 256, 1);
+  }
+
+  .orange .separator{
+    border-bottom: solid 1px rgba(256, 256, 256, .4);
+  }
+
+
+{% endblock  %}
+
+{% block body %} {% load static %}
+<div class="card orange">
+    <div class="card-content">
+      <div class="balance">
+        <div class="balance-left">
+          <div class="currency"><img style="width: 50%;" src="/media/images/Agri_coin_logo.png" alt=""></div>
+        </div>
+        <div class="balance-right">
+          <div class="balance-title">Agri Coin</div>
+          <div class="balance-amount">00</div>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div class="actions">
+        <div>
+          <a onclick="refresh_balance()">Refresh Balance <i class="fa fa-fw fa-history" aria-hidden="true"></i></a> 
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script src="/media/js/user_profile.js"></script>
+{% endblock %}
