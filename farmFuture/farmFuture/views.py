@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from farmapp.models import WebUser
+from farmapp.models import WebUser, Cart
 from django.contrib.auth import models
 from django.core.files.storage import default_storage
 
@@ -60,6 +60,8 @@ def handleSignUpUser(request):
         new_user = authe.create_user_with_email_and_password(email, password)
         web_user = WebUser(id=new_user["localId"], full_name=full_name, group=models.Group.objects.filter(name="NormalUser")[0])
         web_user.save()
+        new_cart = Cart(user=web_user, cart="")
+        new_cart.save()
     return HttpResponseRedirect(reverse("home"))
 
 
@@ -90,6 +92,9 @@ def handleSignUpFarmer(request):
             group=models.Group.objects.filter(name="NormalUser")[0])
 
         web_user.save()
+
+        new_cart = Cart(user=web_user, cart="")
+        new_cart.save()
     return HttpResponseRedirect(reverse("home"))
 
 
@@ -100,4 +105,19 @@ def handleLogout(request):
 
 
 def shop(request):
-    return render(request, "index.html")
+    user = WebUser.objects.filter(id=request.session['uid'])[0]
+    get_cart = Cart.objects.filter(user=user)[0]
+    get_cart = "{}".format(get_cart.cart)
+    return render(request, "index.html", {'carty': get_cart})
+
+
+def update_cart(request):
+    #dynamically updating the cart using ajax request
+    user = WebUser.objects.filter(id=request.session['uid'])[0]
+    new_cart = request.GET.get('cart', None)
+    get_cart = Cart.objects.filter(user=user)[0]
+    get_cart.cart = new_cart
+    get_cart.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+# LJgMhoPm40UYaQvHdqoHD4aesx02

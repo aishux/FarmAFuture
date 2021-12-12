@@ -91,10 +91,10 @@ async function getAllGoods(){
                     <img id="imagepr${curr_good["id"]}" src='${curr_good["image_uri"]}' class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title" id="namepr${curr_good["id"]}">${curr_good["name"]}</h5>
-                        <h6 class="card-text" id="pricepr${curr_good["id"]}">${curr_good["token_amount"] / (10**18)} Tokens</h6>
+                        <h6 class="card-text" id="pricepr${curr_good["id"]}">${curr_good["token_amount"] / (10**18)}</h6>
                         <p class="card-text">${curr_good["description"]}</p>
                         <span id="divpr${curr_good["id"]}" class="divpr">
-                            <button id="pr${curr_good["id"]}" class="btn btn-primary cart">Add to cart</button></span>
+                            <button id="pr${curr_good["id"]}" onclick="addtoCart(this.id)" class="btn btn-primary cart">Add to cart</button></span>
 
                         <a href="/shop/products/${curr_good["id"]}"><button id="qv${curr_good["id"]}"
                                 class="btn btn-primary">QuickView</button></a>
@@ -119,5 +119,16 @@ async function getAllGoods(){
         $("#shopping_container").append($container_row)
 
     };
-
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        is_start = 2;
+        updateCart(cart);
+    }
+    for (var item in cart) {
+        let idst = item;
+        document.getElementById('div' + item).innerHTML = `<button id="A${idst}" class="btn btn-primary cart" disabled>Added to cart</button>`;
+    }
+    updatePopover(cart);
 }

@@ -1,65 +1,66 @@
 {% extends 'basic.html' %} {% block title %}Welcome To Plant House{% endblock %} {% block css %}
-    .col-md-3 {
-        display: inline-block;
-        margin-left: -4px;
-    }
-    
-    .carousel-indicators .active {
-        background-color: blue;
-    }
-    
-    .col-md-3 img {
-        width: 170px;
-        height:
-            200px;
-    }
-    
-    body .carousel-indicator li {
-        background-color: blue;
-    }
-    
-    body .carousel-indicators {
-        bottom: -35px;
-    }
-    
-    body .carousel-control-prev-icon, body .carousel-control-next-icon {
-        background-color: blue;
-    }
-    
-    .carousel-control-prev,
-    .carousel-control-next {
-        top:
-            auto;
-        bottom: auto;
-        padding-top: 222px;
-    }
-    
-    body .no-padding {
-        padding-left: 0, padding-right: 0;
-    }
-    
-    .carousel-indicators li {
-        background-color: #7c58d4;
-    }
-    
-    @media (min-width: 767px) {
-        .hidden-xs {
-            display: none;
-        }
-    }
-    
-    @media (max-width: 767px) {
-        #popcart {
-            margin-top: 10px;
-        }
-    
-    }
+.col-md-3 {
+display: inline-block;
+margin-left: -4px;
+}
+
+.carousel-indicators .active {
+background-color: blue;
+}
+
+.col-md-3 img {
+width: 170px;
+height:
+200px;
+}
+
+body .carousel-indicator li {
+background-color: blue;
+}
+
+body .carousel-indicators {
+bottom: -35px;
+}
+
+body .carousel-control-prev-icon, body .carousel-control-next-icon {
+background-color: blue;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+top:
+auto;
+bottom: auto;
+padding-top: 222px;
+}
+
+body .no-padding {
+padding-left: 0, padding-right: 0;
+}
+
+.carousel-indicators li {
+background-color: #7c58d4;
+}
+
+@media (min-width: 767px) {
+.hidden-xs {
+display: none;
+}
+}
+
+@media (max-width: 767px) {
+#popcart {
+margin-top: 10px;
+}
+
+}
 {% endblock %} {% block body %} {% load static %}
 <nav id="basicNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark hidden-xs">
     <form method="get" action="/shop/search/" class="form-inline my-2 my-lg-0">
-                <span id="search"><input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search"></span>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+        <span id="search"><input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                name="search"></span>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
 <div class="container" id="shopping_container">
 </div>
@@ -69,46 +70,34 @@
 <script src="/media/js/shop.js"></script>
 <script>
     var is_start;
-    if(!isMobile){
-    $("#navbarSupportedContent").append(`<form method="get" action="/shop/search/" class="form-inline my-2 my-lg-0">
+    if (!isMobile) {
+        $("#navbarSupportedContent").append(`<form method="get" action="/shop/search/" class="form-inline my-2 my-lg-0">
                 <span id="search"><input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search"></span>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>`);
-        }
+    }
     $("#basicNavbar").append(`<button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
 sagittis lacus vel augue laoreet rutrum faucibus.">
   Cart(<span id="cart">0</span>)
 </button>`);
-    //find out the cart items from local storage
-    {% if user.is_authenticated %}
+
     localStorage.setItem('cart',JSON.stringify({{carty|safe}}))
-    {% endif %}
-    if (localStorage.getItem('cart') == null) {
-        var cart = {};
-    } else {
+
+    function addtoCart(idstr){
         cart = JSON.parse(localStorage.getItem('cart'));
-        is_start = 2;
-        updateCart(cart);
-    }
-    for (var item in cart) {
-        let idst = item;
-        document.getElementById('div' + item).innerHTML = `<button id="A${idst}" class="btn btn-primary cart" disabled>Added to cart</button>`;
-    }
-    $('.divpr').on('click', 'button.cart', function () {
-        var idstr = this.id.toString();
+        idstr = idstr.toString();
+        console.log("herere" + idstr)
         qty = 1;
         let idst = idstr;
         name = document.getElementById("name" + idstr).innerHTML;
-        price = document.getElementById("price" + idstr).innerHTML.slice(3);
+        price = document.getElementById("price" + idstr).innerHTML;
         image = document.getElementById("image" + idstr).getAttribute('src');
-        nursery = document.getElementById('nursery' + idstr).innerHTML;
-        cart[idstr] = [qty, name, price, image,nursery];
+        cart[idstr] = [qty, name, price, image];
         document.getElementById('div' + idstr).innerHTML = `<button id="A${idst}" class="btn btn-primary cart" disabled>Added to cart</button>`;
 
         updateCart(cart);
 
-    });
-    updatePopover(cart);
+    };
 
     function updatePopover(cart) {
         var popstr = "";
@@ -159,16 +148,17 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
 
         //dynamically update the cart in the database
         $.ajax({
-        url: 'ajax/cartUpdate/',
-        data: {
-          'cart': JSON.stringify(cart)
-        }
+            url: '/ajax/cartUpdate/',
+            data: {
+                'cart': JSON.stringify(cart)
+            }
         });
         document.getElementById('cart').innerHTML = sum;
         updatePopover(cart);
     }
+
     $("#popcart").popover({ trigger: "manual" }).click(function () {
-            window.location = "/shop/cart";
+        window.location = "/shop/cart";
     })
     $("#popcart").popover({ trigger: "manual" }).dblclick(function () {
         var pop = $(this);
@@ -181,12 +171,10 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
         })
     })
 
-//To refresh page whenever the user navigates from some other page to this one
-if(performance.navigation.type == 2){
-   location.reload(true);
-}
+    //To refresh page whenever the user navigates from some other page to this one
+    if (performance.navigation.type == 2) {
+        location.reload(true);
+    }
 
 </script>
 {% endblock %}
-
-
