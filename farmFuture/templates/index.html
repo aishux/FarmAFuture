@@ -85,18 +85,23 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
 
     function addtoCart(idstr){
         cart = JSON.parse(localStorage.getItem('cart'));
-        idstr = idstr.toString();
-        console.log("herere" + idstr)
-        qty = 1;
-        let idst = idstr;
-        name = document.getElementById("name" + idstr).innerHTML;
-        price = document.getElementById("price" + idstr).innerHTML;
-        image = document.getElementById("image" + idstr).getAttribute('src');
-        cart[idstr] = [qty, name, price, image];
-        document.getElementById('div' + idstr).innerHTML = `<button id="A${idst}" class="btn btn-primary cart" disabled>Added to cart</button>`;
-
-        updateCart(cart);
-
+        seller = document.getElementById("seller" + idstr).innerHTML;
+        if(localStorage.getItem("farmer_in_cart") == "" || localStorage.getItem("farmer_in_cart") == seller){
+            idstr = idstr.toString();
+            console.log("herere" + idstr)
+            qty = 1;
+            let idst = idstr;
+            name = document.getElementById("name" + idstr).innerHTML;
+            price = document.getElementById("price" + idstr).innerHTML;
+            image = document.getElementById("image" + idstr).getAttribute('src');
+            cart[idstr] = [qty, name, price, image, seller];
+            document.getElementById('div' + idstr).innerHTML = `<button id="A${idst}" class="btn btn-primary cart" disabled>Added to cart</button>`;
+            localStorage.setItem("farmer_in_cart",seller)
+            updateCart(cart);
+        }
+        else{
+            alert("Please add goods only from one farmer!")
+        }
     };
 
     function updatePopover(cart) {
@@ -117,7 +122,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
                 }
             }
         }
-        popstr = popstr + "</div> <a href='/shop/cart'><button class='btn btn-primary' id='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id='clearcart'>Clear Cart</button>";
+        popstr = popstr + "</div> <a href='/cart'><button class='btn btn-primary' id='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id='clearcart'>Clear Cart</button>";
 
         document.getElementById('popcart').setAttribute('data-content', popstr);
         if (is_start != 0) {
@@ -145,7 +150,9 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
             sum = sum + cart[item][0];
         }
         localStorage.setItem('cart', JSON.stringify(cart));
-
+        if(sum == 0){
+            localStorage.setItem("farmer_in_cart", "")
+        }
         //dynamically update the cart in the database
         $.ajax({
             url: '/ajax/cartUpdate/',
@@ -158,7 +165,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
     }
 
     $("#popcart").popover({ trigger: "manual" }).click(function () {
-        window.location = "/shop/cart";
+        window.location = "/cart";
     })
     $("#popcart").popover({ trigger: "manual" }).dblclick(function () {
         var pop = $(this);

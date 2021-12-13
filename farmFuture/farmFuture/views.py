@@ -121,5 +121,13 @@ def update_cart(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+def display_cart(request):
+    return render(request, "cart.html")
+
+
+def checkout(request):
+    return render(request, "checkout.html")
+
+
 def user_profile(request):
     return render(request, "user_profile.html")
