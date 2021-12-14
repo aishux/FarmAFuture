@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from farmapp.models import WebUser, Cart
+from farmapp.models import WebUser, Cart, Orders
 from django.contrib.auth import models
 from django.core.files.storage import default_storage
 
@@ -126,6 +126,37 @@ def display_cart(request):
 
 
 def checkout(request):
+    if request.method == "POST":
+        user = WebUser.objects.filter(id=request.session['uid'])[0]
+        order_id = request.POST.get("order_id")
+        items_json = request.POST.get('itemsJson','')
+        name = request.POST.get('firstName','')+" "+request.POST.get('lastName','')
+        amount = request.POST.get('amount','')
+        email = request.POST.get('email','')
+        address = request.POST.get('address1','')+" "+request.POST.get('address2','')
+        city = request.POST.get('city','')
+        state = request.POST.get('state','')
+        zip_code = request.POST.get('zip_code','')
+        phone = request.POST.get('phone','')
+
+        new_order = Orders(
+            user=user,
+            order_id=order_id,
+            items_json=items_json,
+            amount=float(amount),
+            name=name,
+            email=email,
+            address=address,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+            phone=phone
+        )
+
+        new_order.save()
+
+        return JsonResponse({"order_id": order_id})
+
     return render(request, "checkout.html")
 
 

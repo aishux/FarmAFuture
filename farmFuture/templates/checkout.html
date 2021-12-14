@@ -1,7 +1,11 @@
-{% extends 'basic.html' %} {% block title%}Checkout{% endblock %} {% block body %}
+{% extends 'basic.html' %} {% block title%}Checkout{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/media/css/loader.css">
+{% endblock head %}
+{% block body %}
 
 <body class="bg-light">
-    <div class="container">
+    <div class="container" id="main_container">
         <div class="py-5 text-center">
             <h1 class="my-3">Checkout form</h1>
         </div>
@@ -93,6 +97,7 @@
                                     Zip code required.
                                 </div>
                             </div>
+                            <input type="text" name="order_id" id="order_id" hidden>
                         </div>
 
                         <button class="btn btn-primary btn-lg btn-block my-4" type="submit">Continue to checkout</button>
@@ -100,6 +105,12 @@
                 </div>
         </div>
     </div>
+    <div class="content" id="loader_container" hidden>
+        <div class="loading">
+           <p id="loader_text">loading</p>
+           <span></span>
+        </div>
+     </div>
 </body>
 {%endblock%} {%block js%}
 <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>

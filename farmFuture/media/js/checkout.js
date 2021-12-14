@@ -40,11 +40,11 @@ if (localStorage.getItem('cart') == null) {
 }
 var sum = 0;
 for (var item in cart) {
-    if(cart[item][0] == 0){
+    if (cart[item][0] == 0) {
         delete cart[item];
     }
-    else{
-    sum = sum + cart[item][0];
+    else {
+        sum = sum + cart[item][0];
     }
 }
 localStorage.setItem('cart', JSON.stringify(cart));
@@ -81,30 +81,79 @@ if ($.isEmptyObject(cart)) {
 $('#itemsJson').val(JSON.stringify(cart));
 
 
-function payForOrder(hash, good_ids) {
-    web.eth.getTransactionReceipt(hash, function (err, receipt) {
-      if (err) {
-        console.log(err)
-      }
-  
-      if (receipt !== null) {
-        try{
-            good_ids = Object.keys(cart).map(function(v) { return v.slice(2) })
-            good_qtys = Object.values(cart).map(function(v) {return v[0]})
-            transaction2 = operations_contract.methods.placeOrder(token_contract_details[1], current_user_account, good_ids, good_qtys, JSON.stringify(good_ids), JSON.stringify(good_qtys))
-            send(transaction2)
-        }catch(e){
-            console.log(e)
+function saveOrderToDatabase(hash) {
+    document.getElementById("loader_container").hidden = false
+    document.getElementById("main_container").hidden = true
+    $("#loader_text").text("Paying")
+    web.eth.getTransactionReceipt(hash, async function (err, receipt) {
+        if (err) {
+            console.log(err)
         }
-        console.log("Placed order")
-      } else {
-        // Try again in 1 second
-        window.setTimeout(function () {
-            payForOrder(hash);
-        }, 1000);
-      }
+
+        if (receipt !== null) {
+            try {
+                document.getElementById("loader_container").hidden = true
+                document.getElementById("main_container").hidden = false
+                latest_order_id = operations_contract.methods.getLatestOrder(current_user_account).call()
+                console.log("latest order id: ", await latest_order_id)
+                $("#order_id").val(await latest_order_id)
+                $('#itemsJson').val(JSON.stringify(cart));
+                $('#itemsJson').val(JSON.stringify(cart));
+                $('#amount').val($('#totalPrice').html());
+                await latest_order_id
+                var form_data = $("#checkout_form")
+
+                $.ajax({
+                    type: form_data.attr('method'),
+                    url: form_data.attr('action'),
+                    data: form_data.serialize(),
+                    success: function (data) {
+                        alert("Order place with order id: "  + data.order_id)
+                        window.location = "/shop/"
+                    },
+                });
+
+            } catch (e) {
+                console.log(e)
+            }
+            console.log("Placed order")
+        } else {
+            // Try again in 1 second
+            window.setTimeout(function () {
+                saveOrderToDatabase(hash);
+            }, 1000);
+        }
     });
-  }
+}
+
+
+function payForOrder(hash, good_ids) {
+    document.getElementById("loader_container").hidden = false
+    document.getElementById("main_container").hidden = true
+    $("#loader_text").text("Approving")
+    web.eth.getTransactionReceipt(hash, async function (err, receipt) {
+        if (err) {
+            console.log(err)
+        }
+
+        if (receipt !== null) {
+            try {``
+                good_ids = Object.keys(cart).map(function (v) { return v.slice(2) })
+                good_qtys = Object.values(cart).map(function (v) { return v[0] })
+                transaction2 = operations_contract.methods.placeOrder(token_contract_details[1], current_user_account, good_ids, good_qtys, JSON.stringify(good_ids), JSON.stringify(good_qtys))
+                tx2 = await send(transaction2)
+                saveOrderToDatabase(tx2.toString())
+            } catch (e) {
+                console.log(e)
+            }
+        } else {
+            // Try again in 1 second
+            window.setTimeout(function () {
+                payForOrder(hash, good_ids);
+            }, 1000);
+        }
+    });
+}
 
 
 async function send(transaction, value = 0) {
@@ -113,7 +162,7 @@ async function send(transaction, value = 0) {
         to: transaction._parent._address,
         data: transaction.encodeABI(),
         gas: web.utils.toHex(1000000),
-        gasPrice: web.utils.toHex(10e9),
+        gasPrice: web.utils.toHex(10e10),
         value: web.utils.toHex(value)
     },]
 
@@ -127,9 +176,9 @@ async function send(transaction, value = 0) {
 }
 
 
-$("#checkout_form").submit(async function(e){
+$("#checkout_form").submit(async function (e) {
     e.preventDefault();
-    good_ids = Object.keys(cart).map(function(v) { return v.slice(2) }) 
+    good_ids = Object.keys(cart).map(function (v) { return v.slice(2) })
     confirmed_total = 0
     let promises = [];
     for (const item_id of good_ids) {
