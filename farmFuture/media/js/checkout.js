@@ -96,10 +96,13 @@ function saveOrderToDatabase(hash, good_ids) {
                 document.getElementById("main_container").hidden = false
                 latest_order_id = operations_contract.methods.getLatestOrder(current_user_account).call()
                 console.log("latest order id: ", await latest_order_id)
+                json_cart = JSON.stringify(cart)
                 $("#order_id").val(await latest_order_id)
-                $('#itemsJson').val(JSON.stringify(cart));
-                $('#itemsJson').val(JSON.stringify(cart));
+                $('#itemsJson').val(json_cart);
+                $('#itemsJson').val(json_cart);
                 $('#item_ids').val(JSON.stringify(good_ids));
+                $('#buyer_address').val(current_user_account);
+                $('#seller_address').val(cart["pr"+good_ids[0]][4]);
                 $('#amount').val($('#totalPrice').html());
                 await latest_order_id
                 var form_data = $("#checkout_form")

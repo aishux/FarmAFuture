@@ -1,3 +1,4 @@
+import json
 import pyrebase
 from django.shortcuts import render, redirect
 from django.contrib import auth
@@ -128,6 +129,8 @@ def display_cart(request):
 def checkout(request):
     if request.method == "POST":
         user = WebUser.objects.filter(id=request.session['uid'])[0]
+        seller_address = request.POST.get("seller_address")
+        buyer_address = request.POST.get("buyer_address")
         order_id = request.POST.get("order_id")
         items_json = request.POST.get('itemsJson','')
         item_ids = request.POST.get('item_ids','')
@@ -142,6 +145,8 @@ def checkout(request):
 
         new_order = Orders(
             user=user,
+            buyer_address=buyer_address,
+            seller_address=seller_address,
             order_id=order_id,
             items_json=items_json,
             item_ids=item_ids,
@@ -160,6 +165,15 @@ def checkout(request):
         return JsonResponse({"order_id": order_id})
 
     return render(request, "checkout.html")
+
+
+def order_summary(request, order_id):
+    current_order = Orders.objects.filter(order_id=order_id)[0]
+    items_lst = []
+    json_items = json.loads(current_order.items_json)
+    for item in json_items:
+        items_lst.append(json_items[item])
+    return render(request, "order_summary.html", {"curr_order": current_order, "all_items": items_lst})
 
 
 def user_profile(request):

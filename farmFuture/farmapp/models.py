@@ -18,6 +18,8 @@ class WebUser(models.Model):
 
 class Orders(models.Model):
     user = models.ForeignKey(WebUser, default=1, on_delete=models.CASCADE)
+    seller_address = models.CharField(max_length=50, default="")
+    buyer_address = models.CharField(max_length=50, default="")
     order_id = models.CharField(max_length=100, primary_key=True)
     items_json = models.CharField(max_length=5000)
     item_ids = models.TextField(default="")
@@ -29,6 +31,7 @@ class Orders(models.Model):
     state = models.CharField(max_length=111)
     zip_code = models.CharField(max_length=111)
     phone = models.CharField(max_length=111, default="")
+    order_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name+"(id:"+str(self.order_id)+")"
