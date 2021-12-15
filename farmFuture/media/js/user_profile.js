@@ -29,5 +29,38 @@ window.addEventListener('load', async () => {
 
 async function refresh_balance(){
     curr_balance = await token_contract.methods.balanceOf(current_user_account).call()
-    $(".balance-amount").html(curr_balance / (10**18))
+    $(".balance-amount").html((curr_balance / (10**18)).toFixed(2))
+}
+
+
+async function send(transaction, value = 0) {
+    const params = [{
+        from: current_user_account,
+        to: transaction._parent._address,
+        data: transaction.encodeABI(),
+        gas: web.utils.toHex(1000000),
+        gasPrice: web.utils.toHex(10e10),
+        value: web.utils.toHex(value)
+    },]
+
+    sending_tx = window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params,
+    })
+
+    await sending_tx;
+    return await sending_tx
+}
+
+
+function getTokens() {
+    token_count_rs = parseFloat($("#token_num").val().trim()) * 10
+    $.ajax({
+        url: "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=INR&tsyms=ETH",
+        dataType: "json",
+        success: function (data) {
+            amount_tobe_payed = (data.RAW.INR.ETH.OPEN24HOUR * token_count_rs).toFixed(18);
+            tx = send(token_contract.methods.payUser(), web.utils.toWei(amount_tobe_payed, "ether"))
+        }
+    });
 }

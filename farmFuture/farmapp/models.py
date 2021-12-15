@@ -20,6 +20,7 @@ class Orders(models.Model):
     user = models.ForeignKey(WebUser, default=1, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=100, primary_key=True)
     items_json = models.CharField(max_length=5000)
+    item_ids = models.TextField(default="")
     amount = models.FloatField(default=0)
     name = models.CharField(max_length=90)
     email = models.CharField(max_length=111)

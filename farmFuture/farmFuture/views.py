@@ -130,6 +130,7 @@ def checkout(request):
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         order_id = request.POST.get("order_id")
         items_json = request.POST.get('itemsJson','')
+        item_ids = request.POST.get('item_ids','')
         name = request.POST.get('firstName','')+" "+request.POST.get('lastName','')
         amount = request.POST.get('amount','')
         email = request.POST.get('email','')
@@ -143,6 +144,7 @@ def checkout(request):
             user=user,
             order_id=order_id,
             items_json=items_json,
+            item_ids=item_ids,
             amount=float(amount),
             name=name,
             email=email,
@@ -161,4 +163,5 @@ def checkout(request):
 
 
 def user_profile(request):
-    return render(request, "user_profile.html")
+    all_orders = Orders.objects.filter(user=WebUser.objects.filter(id=request.session['uid'])[0])[:5]
+    return render(request, "user_profile.html",{"all_orders":all_orders})

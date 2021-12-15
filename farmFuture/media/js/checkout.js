@@ -81,7 +81,7 @@ if ($.isEmptyObject(cart)) {
 $('#itemsJson').val(JSON.stringify(cart));
 
 
-function saveOrderToDatabase(hash) {
+function saveOrderToDatabase(hash, good_ids) {
     document.getElementById("loader_container").hidden = false
     document.getElementById("main_container").hidden = true
     $("#loader_text").text("Paying")
@@ -99,6 +99,7 @@ function saveOrderToDatabase(hash) {
                 $("#order_id").val(await latest_order_id)
                 $('#itemsJson').val(JSON.stringify(cart));
                 $('#itemsJson').val(JSON.stringify(cart));
+                $('#item_ids').val(JSON.stringify(good_ids));
                 $('#amount').val($('#totalPrice').html());
                 await latest_order_id
                 var form_data = $("#checkout_form")
@@ -142,7 +143,7 @@ function payForOrder(hash, good_ids) {
                 good_qtys = Object.values(cart).map(function (v) { return v[0] })
                 transaction2 = operations_contract.methods.placeOrder(token_contract_details[1], current_user_account, good_ids, good_qtys, JSON.stringify(good_ids), JSON.stringify(good_qtys))
                 tx2 = await send(transaction2)
-                saveOrderToDatabase(tx2.toString())
+                saveOrderToDatabase(tx2.toString(), good_ids)
             } catch (e) {
                 console.log(e)
             }
