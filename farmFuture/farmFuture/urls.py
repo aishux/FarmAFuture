@@ -31,6 +31,7 @@ urlpatterns = [
     path('cart/', views.display_cart, name='displaycart'),
     path('ajax/cartUpdate/', views.update_cart, name='updatecart'),
     path('userprofile/', views.user_profile, name='userprofile'),
+    path('allorders/', views.all_orders, name='allorders'),
     path('ordersummary/<str:order_id>', views.order_summary, name='ordersummary'),
     path('checkout/', views.checkout, name='checkout'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

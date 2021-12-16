@@ -1,0 +1,22 @@
+{% extends 'basic.html' %} {% block title %}All Your Orders{% endblock %}
+{% block body %} {% load static %}
+<div style="text-align: center;margin:100px">
+    <h2>All Orders</h2>
+
+    {% for order in all_orders %}
+
+    <div class="card border-info mb-3" style="min-width: 100%;">
+        <div class="card-body text-info" style="display:flex">
+            <h5 class="card-title" style="min-width: 25%;">ORDER ID: <span id="order_id_num">{{order.order_id}}</span>
+            </h5>
+            <h5 class="card-title" style="min-width: 25%;">TOTAL AMOUNT: <span
+                    id="total_amount_num">{{order.amount}}</span></h5>
+            <h5 class="card-title" style="min-width: 25%;">ITEM IDs: <span id="item_count_num">{{order.item_ids}}</span>
+            </h5>
+            <a href="/ordersummary/{{order.order_id}}" style="min-width: 10%;"><button>View Order</button></a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

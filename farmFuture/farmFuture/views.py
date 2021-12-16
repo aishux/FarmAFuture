@@ -2,7 +2,7 @@ import json
 import pyrebase
 from django.shortcuts import render, redirect
 from django.contrib import auth
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.urls import reverse
 from farmapp.models import WebUser, Cart, Orders
 from django.contrib.auth import models
@@ -48,6 +48,7 @@ def handleLogin(request):
             return render(request, 'login.html', {"msg": message})
 
         session_id = user['localId']
+        request.session['email'] = email
         request.session['uid'] = str(session_id)
         return render(request, 'welcome.html')
     return HttpResponseRedirect(reverse("home"))
@@ -167,15 +168,25 @@ def checkout(request):
     return render(request, "checkout.html")
 
 
+def all_orders(request):
+    all_orders = Orders.objects.filter(user=WebUser.objects.filter(id=request.session['uid'])[0])
+    return render(request, "all_orders.html",{"all_orders":all_orders})
+
+
 def order_summary(request, order_id):
     current_order = Orders.objects.filter(order_id=order_id)[0]
-    items_lst = []
-    json_items = json.loads(current_order.items_json)
-    for item in json_items:
-        items_lst.append(json_items[item])
-    return render(request, "order_summary.html", {"curr_order": current_order, "all_items": items_lst})
+    if current_order.user.id == request.session['uid']:
+        items_lst = []
+        json_items = json.loads(current_order.items_json)
+        for item in json_items:
+            items_lst.append(json_items[item])
+        return render(request, "order_summary.html", {"curr_order": current_order, "all_items": items_lst})
+    else:
+        return HttpResponse('Unauthorized', status=401)
 
 
 def user_profile(request):
-    all_orders = Orders.objects.filter(user=WebUser.objects.filter(id=request.session['uid'])[0])[:5]
-    return render(request, "user_profile.html",{"all_orders":all_orders})
+    user = WebUser.objects.filter(id=request.session['uid'])[0]
+    user_email = request.session["email"]
+    all_orders = Orders.objects.filter(user=user)[:5]
+    return render(request, "user_profile.html", {"all_orders": all_orders, "user_name": user.full_name, "user_email": user_email})

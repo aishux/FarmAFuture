@@ -11,6 +11,8 @@ window.addEventListener('load', async () => {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             current_user_account = accounts[0]
+            $("#current_account").text(current_user_account)
+            refresh_balance()
         } catch (error) {
             if (error.code === 4001) {
                 // User rejected request
@@ -18,6 +20,8 @@ window.addEventListener('load', async () => {
         }
         window.ethereum.on('accountsChanged', (accounts) => {
             current_user_account = accounts[0]
+            refresh_balance()
+            $("#current_account").text(current_user_account)
         });
 
     } else {
@@ -63,4 +67,23 @@ function getTokens() {
             tx = send(token_contract.methods.payUser(), web.utils.toWei(amount_tobe_payed, "ether"))
         }
     });
+}
+
+lc = ''
+
+async function VerifyOrder(order_id){
+    get_order = await operations_contract.methods.id_to_order(order_id).call()
+    seller_address = document.getElementById("seller_address")
+    buyer_address = document.getElementById("buyer_address")
+    order_total = document.getElementById("order_total")
+
+    if(get_order["seller_address"] == seller_address.innerText.trim() && get_order["buyer_address"] == buyer_address.innerText.trim() && get_order["total_bill"] == (order_total.innerText.trim() * (10**18))){
+        alert("The order details are verified from Blockchain!")
+    }
+    else{
+        seller_address.innerText = get_order["seller_address"]
+        buyer_address.innerText = get_order["buyer_address"]
+        order_total.innerText = get_order["total_bill"] / (10**18)
+        alert("There were some manupulations! But now the data is legit!")
+    }
 }
