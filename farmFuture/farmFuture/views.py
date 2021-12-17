@@ -1,5 +1,6 @@
 import json
 import pyrebase
+import os
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
@@ -7,6 +8,7 @@ from django.urls import reverse
 from farmapp.models import WebUser, Cart, Orders
 from django.contrib.auth import models
 from django.core.files.storage import default_storage
+from .utils import web, operations_contract, upload_to_ipfs, final_is_delivered, token_address
 
 config = {
     'apiKey': "AIzaSyCByllLto91nY_iGjo36nFzFzlZ6QFZPBI",
@@ -190,3 +192,37 @@ def user_profile(request):
     user_email = request.session["email"]
     all_orders = Orders.objects.filter(user=user)[:5]
     return render(request, "user_profile.html", {"all_orders": all_orders, "user_name": user.full_name, "user_email": user_email})
+
+
+def add_good(request):
+    return render(request, "farmers/addItem.html")
+
+
+def save_good(request):
+    if request.method == "POST":
+        user = WebUser.objects.filter(id=request.session['uid'])[0]
+        if user.group.name == "Farmer":
+            good_name = request.POST.get("good_name")
+            token_amount = int((float(request.POST.get("good_price")) / 10)*(10**18))
+            image = request.FILES.get("good_image")
+            description = request.POST.get("good_desc")
+
+            farmer_address = user.account_address
+
+            image_uri = upload_to_ipfs(image)
+
+            nonce = web.eth.get_transaction_count(web.toChecksumAddress(web.eth.default_account))
+            operation_tx = operations_contract.functions.addGoods(farmer_address, good_name, token_amount, image_uri, description).buildTransaction({
+                'chainId': 4,
+                'gas': 7000000,
+                'gasPrice': web.toHex((10**11)),
+                'nonce': nonce,
+                })
+            signed_tx = web.eth.account.sign_transaction(operation_tx, private_key=os.getenv("PRIVATE_KEY"))
+            receipt = web.eth.send_raw_transaction(signed_tx.rawTransaction)
+            web.eth.wait_for_transaction_receipt(receipt)
+            print("Good will be added soon!")
+
+            return HttpResponseRedirect(reverse("addgood"))
+
+    return HttpResponse('Unauthorized', status=401)
