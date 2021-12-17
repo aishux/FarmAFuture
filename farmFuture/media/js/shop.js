@@ -107,7 +107,7 @@ async function getAllGoods(){
             </div>
             `)
 
-            if(goods_index % 4 == 0 && goods_index > 0 && goods_index != farmer_to_goods[all_farmers[farmer_index]].length){
+            if(goods_index > 0 && goods_index % 4 == 0 && goods_index != farmer_to_goods[all_farmers[farmer_index]].length){
                 $carousel_inner.append($carousel_item)
                 $carousel_item = $(`<div class="carousel-item"></div>`)
             }

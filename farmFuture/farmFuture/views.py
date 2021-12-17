@@ -226,3 +226,8 @@ def save_good(request):
             return HttpResponseRedirect(reverse("addgood"))
 
     return HttpResponse('Unauthorized', status=401)
+
+
+def farmer_home(request):
+    user = WebUser.objects.filter(id=request.session['uid'])[0].account_address
+    return render(request, "farmers/index.html", {"farmerAddress": user})
