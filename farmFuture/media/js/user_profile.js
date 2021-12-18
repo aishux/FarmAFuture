@@ -33,7 +33,9 @@ window.addEventListener('load', async () => {
 
 async function refresh_balance(){
     curr_balance = await token_contract.methods.balanceOf($(".user_account").text()).call()
+    available_withdrawal = await operations_contract.methods.farmer_to_amount_payable($(".user_account").text()).call()
     $(".balance-amount").html((curr_balance / (10**18)).toFixed(2))
+    $("#amount_withdrawal").html((available_withdrawal / (10**18)).toFixed(2))
 }
 
 

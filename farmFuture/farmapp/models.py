@@ -31,6 +31,8 @@ class Orders(models.Model):
     state = models.CharField(max_length=111)
     zip_code = models.CharField(max_length=111)
     phone = models.CharField(max_length=111, default="")
+    buyer_delivered = models.BooleanField(default=False)
+    seller_delivered = models.BooleanField(default=False)
     order_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

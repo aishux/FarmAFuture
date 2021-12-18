@@ -41,15 +41,17 @@ def upload_to_ipfs(_image):
 
 
 def final_is_delivered(order_id):
-    nonce = web.eth.get_transaction_count(web.toChecksumAddress(web.eth.default_account))
-    deliver_tx = operations_contract.functions.idDelivered(order_id).buildTransaction({
-            'chainId': 4,
-            'gas': 700000,
-            'maxFeePerGas': web.toWei('2', 'gwei'),
-            'maxPriorityFeePerGas': web.toWei('1', 'gwei'),
-            'nonce': nonce,
-            })
-    signed_tx = web.eth.account.sign_transaction(deliver_tx, private_key=os.getenv("PRIVATE_KEY"))
-    receipt = web.eth.send_raw_transaction(signed_tx.rawTransaction)
-    web.eth.wait_for_transaction_receipt(receipt)
+    is_already_payed = operations_contract.functions.id_to_order(order_id).call()[-1]
+    if not is_already_payed:
+        nonce = web.eth.get_transaction_count(web.toChecksumAddress(web.eth.default_account))
+        deliver_tx = operations_contract.functions.idDelivered(order_id).buildTransaction({
+                'chainId': 4,
+                'gas': 700000,
+                'maxFeePerGas': web.toWei('2', 'gwei'),
+                'maxPriorityFeePerGas': web.toWei('1', 'gwei'),
+                'nonce': nonce,
+                })
+        signed_tx = web.eth.account.sign_transaction(deliver_tx, private_key=os.getenv("PRIVATE_KEY"))
+        receipt = web.eth.send_raw_transaction(signed_tx.rawTransaction)
+        web.eth.wait_for_transaction_receipt(receipt)
     print("Order marked as delivered!")

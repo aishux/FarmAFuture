@@ -4,6 +4,7 @@ operations_contract_details = JSON.parse(localStorage.getItem("operations_contra
 var token_contract = new web.eth.Contract(token_contract_details[0], token_contract_details[1])
 var operations_contract = new web.eth.Contract(operations_contract_details[0], operations_contract_details[1])
 var current_user_account = ""
+var good_ids = ""
 
 window.addEventListener('load', async () => {
 
@@ -92,6 +93,7 @@ function saveOrderToDatabase(hash, good_ids) {
 
         if (receipt !== null) {
             try {
+                good_ids = Object.keys(cart).map(function (v) { return v.slice(2) })
                 document.getElementById("loader_container").hidden = true
                 document.getElementById("main_container").hidden = false
                 latest_order_id = operations_contract.methods.getLatestOrder(current_user_account).call()
@@ -102,7 +104,7 @@ function saveOrderToDatabase(hash, good_ids) {
                 $('#itemsJson').val(json_cart);
                 $('#item_ids').val(JSON.stringify(good_ids));
                 $('#buyer_address').val(current_user_account);
-                $('#seller_address').val(cart["pr"+good_ids[0]][4]);
+                $('#seller_address').val(localStorage.getItem("farmer_in_cart"));
                 $('#amount').val($('#totalPrice').html());
                 await latest_order_id
                 var form_data = $("#checkout_form")

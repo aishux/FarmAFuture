@@ -161,7 +161,9 @@ def checkout(request):
             city=city,
             state=state,
             zip_code=zip_code,
-            phone=phone
+            phone=phone,
+            buyer_delivered=False,
+            seller_delivered=False
         )
 
         new_order.save()
@@ -172,13 +174,19 @@ def checkout(request):
 
 
 def all_orders(request):
-    all_orders = Orders.objects.filter(user=WebUser.objects.filter(id=request.session['uid'])[0])
-    return render(request, "all_orders.html",{"all_orders":all_orders})
+    user = WebUser.objects.filter(id=request.session['uid'])[0]
+    is_farmer = user.group.name == "Farmer"
+    if user.group.name == "Farmer":
+        all_orders = Orders.objects.filter(seller_address=user.account_address)
+    else:
+        all_orders = Orders.objects.filter(user=WebUser.objects.filter(id=request.session['uid'])[0])
+    return render(request, "all_orders.html",{"all_orders":all_orders, "is_farmer": is_farmer})
 
 
 def order_summary(request, order_id):
+    user = WebUser.objects.filter(id=request.session['uid'])[0]
     current_order = Orders.objects.filter(order_id=order_id)[0]
-    if current_order.user.id == request.session['uid']:
+    if current_order.user.id == request.session['uid'] or current_order.seller_address == user.account_address:
         items_lst = []
         json_items = json.loads(current_order.items_json)
         for item in json_items:
@@ -191,14 +199,18 @@ def order_summary(request, order_id):
 def user_profile(request):
     account_address = ""
     farmer_balance = ""
+    amount_withdrawable = ""
     user = WebUser.objects.filter(id=request.session['uid'])[0]
     user_email = request.session["email"]
     is_farmer = user.group.name == "Farmer"
     if is_farmer:
         account_address = user.account_address
         farmer_balance = web.eth.getBalance(account_address)
-    all_orders = Orders.objects.filter(user=user)[:5]
-    return render(request, "user_profile.html", {"all_orders": all_orders, "user_name": user.full_name, "user_email": user_email, "is_farmer": is_farmer, "account_address": account_address, "farmer_balance": farmer_balance})
+        amount_withdrawable = operations_contract.functions.farmer_to_amount_payable(account_address).call()
+        all_orders = Orders.objects.filter(seller_address=user.account_address)[:5]
+    else:
+        all_orders = Orders.objects.filter(user=user)[:5]
+    return render(request, "user_profile.html", {"all_orders": all_orders, "user_name": user.full_name, "user_email": user_email, "is_farmer": is_farmer, "account_address": account_address, "farmer_balance": farmer_balance, "amount_withdrawable":amount_withdrawable})
 
 
 def add_good(request):
@@ -259,3 +271,21 @@ def farmer_withdraw(request, acc_address):
         return HttpResponseRedirect(reverse("userprofile"))
     else:
         return HttpResponse('Unauthorized', status=401)
+
+
+def order_delivered(request, order_id):
+    user = WebUser.objects.filter(id=request.session['uid'])[0]
+    curr_order = Orders.objects.filter(order_id=order_id)[0]
+    if user.group.name == "Farmer" and curr_order.seller_address == user.account_address:
+        curr_order.seller_delivered = True
+        curr_order.save()
+    elif user.group.name != "Farmer" and curr_order.user == user:
+        curr_order.buyer_delivered = True
+        curr_order.save()
+    else:
+        return HttpResponse('Unauthorized', status=401)
+
+    if curr_order.seller_delivered and curr_order.buyer_delivered:
+        final_is_delivered(int(order_id))
+
+    return HttpResponseRedirect(reverse("allorders"))
