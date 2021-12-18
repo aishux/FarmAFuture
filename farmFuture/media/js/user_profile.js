@@ -32,7 +32,7 @@ window.addEventListener('load', async () => {
 })
 
 async function refresh_balance(){
-    curr_balance = await token_contract.methods.balanceOf(current_user_account).call()
+    curr_balance = await token_contract.methods.balanceOf($(".user_account").text()).call()
     $(".balance-amount").html((curr_balance / (10**18)).toFixed(2))
 }
 
@@ -69,7 +69,6 @@ function getTokens() {
     });
 }
 
-lc = ''
 
 async function VerifyOrder(order_id){
     get_order = await operations_contract.methods.id_to_order(order_id).call()

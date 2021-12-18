@@ -188,10 +188,16 @@ def order_summary(request, order_id):
 
 
 def user_profile(request):
+    account_address = ""
+    farmer_balance = ""
     user = WebUser.objects.filter(id=request.session['uid'])[0]
     user_email = request.session["email"]
+    is_farmer = user.group.name == "Farmer"
+    if is_farmer:
+        account_address = user.account_address
+        farmer_balance = web.eth.getBalance(account_address)
     all_orders = Orders.objects.filter(user=user)[:5]
-    return render(request, "user_profile.html", {"all_orders": all_orders, "user_name": user.full_name, "user_email": user_email})
+    return render(request, "user_profile.html", {"all_orders": all_orders, "user_name": user.full_name, "user_email": user_email, "is_farmer": is_farmer, "account_address": account_address, "farmer_balance": farmer_balance})
 
 
 def add_good(request):
@@ -231,3 +237,24 @@ def save_good(request):
 def farmer_home(request):
     user = WebUser.objects.filter(id=request.session['uid'])[0].account_address
     return render(request, "farmers/index.html", {"farmerAddress": user})
+
+
+def farmer_withdraw(request, acc_address):
+    user_acc = WebUser.objects.filter(id=request.session['uid'])[0].account_address
+    if user_acc == acc_address:
+        nonce = web.eth.get_transaction_count(web.toChecksumAddress(web.eth.default_account))
+        withdraw_tx = operations_contract.functions.farmerWithdraw(token_address, acc_address).buildTransaction({
+                'chainId': 4,
+                'gas': 700000,
+                'maxFeePerGas': web.toWei('2', 'gwei'),
+                'maxPriorityFeePerGas': web.toWei('1', 'gwei'),
+                'nonce': nonce,
+                })
+        signed_tx = web.eth.account.sign_transaction(withdraw_tx, private_key=os.getenv("PRIVATE_KEY"))
+        receipt = web.eth.send_raw_transaction(signed_tx.rawTransaction)
+        web.eth.wait_for_transaction_receipt(receipt)
+        print("Tokens have been withdrawn!")
+
+        return HttpResponseRedirect(reverse("userprofile"))
+    else:
+        return HttpResponse('Unauthorized', status=401)
