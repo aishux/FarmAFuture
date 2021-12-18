@@ -18,7 +18,6 @@ async function getAllGoods() {
                 <img src="${all_goods[index].image_uri}" alt="Mountains" style="width:100%; height:150px;border:solid">
                 <h3>${all_goods[index].name}</h3>
                 <p>${all_goods[index].description}</p>
-                <a href="/products/${all_goods[index].is}"><button id="qv${all_goods[index].id}"class="btn btn-primary">QuickView</button></a>
             </div>
             </div>
         `)

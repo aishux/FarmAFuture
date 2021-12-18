@@ -99,9 +99,6 @@ async function getAllGoods(){
                         <p class="card-text">${curr_good["description"]}</p>
                         <span id="divpr${curr_good["id"]}" class="divpr">
                             <button id="pr${curr_good["id"]}" onclick="addtoCart(this.id)" class="btn btn-primary cart">Add to cart</button></span>
-
-                        <a href="/shop/products/${curr_good["id"]}"><button id="qv${curr_good["id"]}"
-                                class="btn btn-primary">QuickView</button></a>
                     </div>
                 </div>
             </div>

@@ -38,6 +38,9 @@
                 <a class="nav-link" href="/farmer/morders/">Orders</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="{% url 'userprofile' %}">Profile</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/shop">Shop</a>
               </li>
             </ul>
@@ -46,7 +49,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            Welcome {{request.user}}
+            Welcome {{request.session.usrname}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>

@@ -51,6 +51,7 @@ def handleLogin(request):
 
         session_id = user['localId']
         request.session['email'] = email
+        request.session['usrname'] = email.split("@")[0]
         request.session['uid'] = str(session_id)
         return render(request, 'welcome.html')
     return HttpResponseRedirect(reverse("home"))
@@ -64,7 +65,7 @@ def handleSignUpUser(request):
         new_user = authe.create_user_with_email_and_password(email, password)
         web_user = WebUser(id=new_user["localId"], full_name=full_name, group=models.Group.objects.filter(name="NormalUser")[0])
         web_user.save()
-        new_cart = Cart(user=web_user, cart="")
+        new_cart = Cart(user=web_user, cart="{}")
         new_cart.save()
     return HttpResponseRedirect(reverse("home"))
 
@@ -97,7 +98,7 @@ def handleSignUpFarmer(request):
 
         web_user.save()
 
-        new_cart = Cart(user=web_user, cart="")
+        new_cart = Cart(user=web_user, cart="{}")
         new_cart.save()
     return HttpResponseRedirect(reverse("home"))
 
