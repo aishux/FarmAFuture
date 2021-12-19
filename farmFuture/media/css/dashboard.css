@@ -21,7 +21,7 @@ body {
 body {
   align-items: center;
   background: linear-gradient(to right, #0196c0, #07c4cb);
-  background-image: url("https://image.freepik.com/free-photo/top-view-minimal-tropical-leaves-composition_23-2148955740.jpg");
+  background-image: url("https://img.freepik.com/free-photo/many-flowers-meadow-field-evening-sunset-natural-landscape-with-beautiful-sunset-sky-pink-tones-with-soft-selective-focus_247934-743.jpg?size=338&ext=jpg");
   display: flex;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 14px;
@@ -33,7 +33,7 @@ body {
 }
 
 .dashboard {
-  background-color: #1b2e58;
+  background-color: #064635;
   box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.39);
   height: 700px;
   overflow: hidden;
@@ -42,7 +42,7 @@ body {
 }
 .dashboard header {
   align-items: center;
-  background-color: #1b2e58;
+  background-color: #064635;
   display: flex;
   font-family: "Amiko", sans-serif;
   height: 4em;
@@ -138,7 +138,7 @@ body {
   height: 38em;
 }
 .dashboard .container .filters-container {
-  background-color: #17294d;
+  background-color: #064635;
   flex-basis: 20%;
 }
 .dashboard .container .filters-container ul {

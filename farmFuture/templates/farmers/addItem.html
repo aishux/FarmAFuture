@@ -76,8 +76,8 @@
     }
 
     .form-style-5 .number {
-        background: #1abc9c;
-        color: #fff;
+        background: #064635;
+        color: #F4EEA9;
         height: 30px;
         width: 30px;
         display: inline-block;
@@ -96,12 +96,12 @@
         padding: 19px 39px 18px 39px;
         color: #FFF;
         margin: 0 auto;
-        background: #1abc9c;
+        background: #F0BB62;
         font-size: 18px;
         text-align: center;
         font-style: normal;
         width: 100%;
-        border: 1px solid #16a085;
+        border: 1px solid #F4EEA9;
         border-width: 1px 1px 3px;
         margin-bottom: 10px;
     }
@@ -119,21 +119,21 @@
     <!-- Displaying the form -->
     <form method="POST" action="{% url 'savegood' %}" enctype="multipart/form-data">{% csrf_token %}
         <fieldset>
-            <legend><span class="number">1</span> Basic</legend>
-            <label for="good_name">Name</label>
+            <legend style="color: #064635;"><span class="number">1</span> Basic</legend>
+            <label for="good_name" style="color: #064635;">Name</label>
             <input type="text" name="good_name" id="good_name">
-            <label for="good_price">Price (in rupees)</label>
+            <label for="good_price" style="color: #064635;">Price (in rupees)</label>
             <input type="number" step="any" name="good_price" id="good_price">
-            <label for="good_image">Image</label>
+            <label for="good_image" style="color: #064635;">Image</label>
             <input type="file" accept="image/png, image/jpeg" name="good_image" id="good_image">
 
         </fieldset>
         <br>
         <fieldset>
-            <legend><span class="number">2</span> Description</legend>
+            <legend style="color: #064635;"><span class="number">2</span> Description</legend>
             <textarea name="good_desc" id="good_desc" cols="30" rows="10"></textarea>
         </fieldset>
-        <input type="submit" value="ADD" />
+        <input style="background-color: #F0BB62;" type="submit" value="ADD" />
     </form>
 </div>
 

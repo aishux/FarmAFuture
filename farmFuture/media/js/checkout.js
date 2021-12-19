@@ -66,16 +66,16 @@ if ($.isEmptyObject(cart)) {
         finalprice = finalprice + totprice;
         mystr = `<li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
-                <h6 class="my-0">${name}</h6>
-                <small class="text-muted">Quantity:${qty}</small>
+                <h6 style="color: #064635" class="my-0">${name}</h6>
+                <small style="color: #519259">Quantity:${qty}</small>
             </div>
-            <span class="text-muted">${totprice}</span>
+            <span style="color: #519259">${totprice}</span>
         </li>`
         $('#items').append(mystr);
     }
     mystr = `<li class="list-group-item d-flex justify-content-between">
-        <span>Total (Agri Coin)</span>
-        <strong>AC <span id='totalPrice'>${finalprice}</span></strong>
+        <span style="color: #064635">Total (Agri Coin)</span>
+        <strong style="color: #519259">AC <span id='totalPrice'>${finalprice}</span></strong>
     </li>`;
     $('#items').append(mystr);
 }

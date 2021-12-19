@@ -64,7 +64,7 @@ async function getAllGoods(){
     }
     for(let farmer_index=0; farmer_index < all_farmers.length; farmer_index++){
         $("#shopping_container").append(`
-            <h1>${all_farmers[farmer_index]}</h1>
+            <h1 style="font-weight: 900;font-size:30px;color: #23211f;font-family: 'Open Sans Condensed';padding-top:30px;color: #064635">Farmer Id: ${all_farmers[farmer_index]}</h1>
         `)
 
         var $carousel_slide = $(`<div id="demo${farmer_index}" class="col carousel slide my-3" data-ride="carousel"></div>`)
@@ -90,15 +90,15 @@ async function getAllGoods(){
             curr_good = farmer_to_goods[all_farmers[farmer_index]][goods_index]
             $carousel_item.append(`
             <div class="col-xs-3 col-sm-3 col-md-3" id="card_main">
-                <div class="card align-items-center" style="width: 18rem;">
+                <div class="card align-items-center" style="width: 18rem;text-align: center;border:1px solid #F4EEA9">
                     <img id="imagepr${curr_good["id"]}" src='${curr_good["image_uri"]}' class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title" id="namepr${curr_good["id"]}">${curr_good["name"]}</h5>
+                        <h5 style="font-weight: 900;text-transform: uppercase;font-size:30px;color: #064635;font-family: 'Open Sans Condensed';" class="card-title" id="namepr${curr_good["id"]}">${curr_good["name"]}</h5>
                         <p id="sellerpr${curr_good["id"]}" hidden>${curr_good["good_owner"]}</p>
-                        <h6 class="card-text" id="pricepr${curr_good["id"]}">${curr_good["token_amount"] / (10**18)}</h6>
-                        <p class="card-text">${curr_good["description"]}</p>
+                        <p style="font-family: 'Open Sans Condensed';font-size: 17px;opacity: 0.8;color:#519259" class="card-text">${curr_good["description"]}</p>
+                        <h6 class="card-text" style="font-weight: 800;color: #064635" id="pricepr${curr_good["id"]}">${curr_good["token_amount"] / (10**18)} AC</h6>
                         <span id="divpr${curr_good["id"]}" class="divpr">
-                            <button id="pr${curr_good["id"]}" onclick="addtoCart(this.id)" class="btn btn-primary cart">Add to cart</button></span>
+                            <button id="pr${curr_good["id"]}" onclick="addtoCart(this.id)" class="btn cart" style="background-color:#F0BB62;color:white">Add to cart</button></span>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@ async function getAllGoods(){
     }
     for (var item in cart) {
         localStorage.setItem("farmer_in_cart", cart[item][4])
-        document.getElementById('div' + item).innerHTML = `<button id="A${item}" class="btn btn-primary cart" disabled>Added to cart</button>`;
+        document.getElementById('div' + item).innerHTML = `<button id="A${item}" class="btn cart" style="background-color:#F0BB62;color:white" disabled>Added to cart</button>`;
     }
     updatePopover(cart);
 }

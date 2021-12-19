@@ -21,8 +21,8 @@
 <body>
 
   <!-- Navbar starts -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/farmer/home">FarmAFuture</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #064635 !important;">
+          <a class="navbar-brand" style="padding:0px !important" href="/farmer/home"><img style="width: 80px;" src="/media/images/main_logo.png" alt=""></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -75,6 +75,15 @@
       {% endblock body %}
 
 </body>
-
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  chat-icon="https:&#x2F;&#x2F;squareselect.in&#x2F;wp-content&#x2F;uploads&#x2F;2021&#x2F;10&#x2F;1655423.png"
+  intent="WELCOME"
+  chat-title="Farm-A-Future"
+  agent-id="2d41f600-fa5a-4c4d-b44e-be08238a7ebb"
+  language-code="en"
+></df-messenger>
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script src="/media/js/farmer_home.js"></script>
 {% block js %}
 {% endblock js %}

@@ -330,26 +330,26 @@ aside {
         <div class="basket">
             <div class="basket-labels">
                 <ul>
-                    <li class="item item-heading">Item</li>
-                    <li class="price">Price</li>
-                    <li class="quantity">Quantity</li>
-                    <li class="subtotal">Subtotal</li>
+                    <li class="item item-heading" style="color: #064635">Item</li>
+                    <li class="price" style="color: #064635">Price</li>
+                    <li class="quantity" style="color: #064635">Quantity</li>
+                    <li class="subtotal" style="color: #064635">Subtotal</li>
                 </ul>
             </div>
         </div>
         <aside>
             <div class="summary">
-                <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+                <div class="summary-total-items" style="color: #064635"><span class="total-items"></span> Items in your Bag</div>
                 <div class="summary-subtotal">
-                    <div class="subtotal-title">Subtotal</div>
-                    <div class="subtotal-value final-value" id="basket-subtotal"></div>
+                    <div class="subtotal-title" style="color: #064635">Subtotal</div>
+                    <div class="subtotal-value final-value" id="basket-subtotal" style="color: #519259"></div>
                 </div>
                 <div class="summary-total">
-                    <div class="total-title">Total</div>
-                    <div class="total-value final-value" id="basket-total"></div>
+                    <div class="total-title" style="color: #064635">Total</div>
+                    <div class="total-value final-value" style="color: #519259" id="basket-total"></div>
                 </div>
                 <div class="summary-checkout">
-                    <button class="checkout-cta">Go to Secure Checkout</button>
+                    <button class="checkout-cta" style="background-color:#F0BB62">Go to Secure Checkout</button>
                 </div>
             </div>
         </aside>
@@ -377,20 +377,20 @@ aside {
         sum = sum + subtotal;
         var str = `<div class="basket-product" id="item${ite}">
         <div class="item">
-          <div class="product-image">
+          <div class="product-image" >
             <img src="${image}" alt="Placholder Image 2" class="product-frame">
           </div>
           <div class="product-details">
-            <h1><strong><span class="item-quantity">${qty}</span> x <a href="#">${name}</a></strong></h1>
+            <h1 style="color: #064635 !important"><strong><span class="item-quantity">${qty}</span> x <a href="#" style="color: #064635;text-decoration: none;">${name}</a></strong></h1>
           </div>
         </div>
-        <div class="price">${price}</div>
+        <div class="price" style="color: #064635">${price}</div>
         <div class="quantity">
           <input type="number" value="${qty}" min="1" class="quantity-field" id="qty${ite}">
         </div>
-        <div class="subtotal">${subtotal}</div>
+        <div class="subtotal" style="color: #064635">${subtotal}</div>
         <div class="remove">
-          <button id="rem${ite}">Remove</button>
+          <button style="color: #064635" id="rem${ite}">Remove</button>
         </div>
       </div>`
         $('.basket').append(str);

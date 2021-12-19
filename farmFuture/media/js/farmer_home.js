@@ -14,15 +14,15 @@ async function getAllGoods() {
     for (let index = 0; index < all_goods.length; index++) {
         $row_item.append(`
             <div class="column">
-            <div class="card">
-                <img src="${all_goods[index].image_uri}" alt="Mountains" style="width:100%; height:150px;border:solid">
-                <h3>${all_goods[index].name}</h3>
-                <p>${all_goods[index].description}</p>
+            <div class="card" style="width:250px">
+                <img src="${all_goods[index].image_uri}" alt="Mountains" style="width:100%; height:150px;border:1px solid #F0BB62">
+                <h3 style="color:#064635">${all_goods[index].name}</h3>
+                <p style="color:#519259">${all_goods[index].description}</p>
             </div>
             </div>
         `)
 
-        if (index > 0 && index % 3 == 0 && index != all_goods.length) {
+        if (index > 0 && index % 5 == 0 && index != all_goods.length) {
             $main_div.append($row_item)
             $row_item = $('<div class="row"></div>')
         }

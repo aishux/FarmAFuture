@@ -7,7 +7,7 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body style="background-image: url('https://image.freepik.com/free-photo/top-view-minimal-tropical-leaves-composition_23-2148955740.jpg');background-repeat: no-repeat;
+<body style="background-image: url('https://img.freepik.com/free-photo/many-flowers-meadow-field-evening-sunset-natural-landscape-with-beautiful-sunset-sky-pink-tones-with-soft-selective-focus_247934-743.jpg?size=338&ext=jpg');background-repeat: no-repeat;
 background-size: cover;">
 <div id="google_translate_element"></div>
     <div class="card" style="width: 50%;
@@ -15,14 +15,14 @@ background-size: cover;">
     margin-top: 20%;">
         <div class="card-body" style="text-align: center;">
           {% if prediction %}
-          <h5 class="card-title">Suggested Crop From Your Choices is: </h5>
-          <h2 class="card-text">{{prediction}}</h2>
+          <h5 class="card-title" style="color: #064635;">Suggested Crop From Your Choices is: </h5>
+          <h2 class="card-text" style="color: #519259;">{{prediction}}</h2>
           {% endif %}
 
-          <h5 class="card-title">Best Crop for these conditions is: </h5>
-          <h2 class="card-text">{{best_crop}}</h2>
-          <a href="{% url 'predictor' %}" class="card-link">Go Back</a>
-          <a href="{% url 'dashboard' %}" class="card-link">Dashboard</a>
+          <h5 class="card-title" style="color: #064635;">Best Crop for these conditions is: </h5>
+          <h2 class="card-text" style="color: #519259;">{{best_crop}}</h2>
+          <a href="{% url 'predictor' %}" style="color: #064635;" class="card-link">Go Back</a>
+          <a href="{% url 'dashboard' %}" style="color: #064635;" class="card-link">Dashboard</a>
         </div>
       </div>
 </body>

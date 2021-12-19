@@ -8,7 +8,7 @@
   body {
     font-family: Arial;
     background: #ECEEF1;
-    background-image: url("https://image.freepik.com/free-photo/top-view-minimal-tropical-leaves-composition_23-2148955740.jpg");
+    background-image: url("https://img.freepik.com/free-photo/many-flowers-meadow-field-evening-sunset-natural-landscape-with-beautiful-sunset-sky-pink-tones-with-soft-selective-focus_247934-743.jpg?size=338&ext=jpg");
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -19,7 +19,7 @@
   }
   
   form {
-    background: rgba(256,256,256,0.4);
+    background: rgba(256,256,256,0.7);
     color: #666;
     min-width: 300px;
     padding: 20px;
