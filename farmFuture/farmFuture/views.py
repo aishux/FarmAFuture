@@ -29,7 +29,7 @@ storage = firebase.storage()
 
 
 def home(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         if user.group.name == "Farmer":
             return HttpResponseRedirect(reverse("farmerhome"))
@@ -110,14 +110,14 @@ def handleSignUpFarmer(request):
 
 
 def handleLogout(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         auth.logout(request)
         authe.current_user = None
     return HttpResponseRedirect(reverse("home"))
 
 
 def shop(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         if user.group.name != "Farmer":
             get_cart = Cart.objects.filter(user=user)[0]
@@ -130,7 +130,7 @@ def shop(request):
 
 def update_cart(request):
     #dynamically updating the cart using ajax request
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         new_cart = request.GET.get('cart', None)
         get_cart = Cart.objects.filter(user=user)[0]
@@ -140,7 +140,7 @@ def update_cart(request):
 
 
 def display_cart(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         return render(request, "cart.html")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -189,7 +189,7 @@ def checkout(request):
 
 
 def all_orders(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         is_farmer = user.group.name == "Farmer"
         if user.group.name == "Farmer":
@@ -201,7 +201,7 @@ def all_orders(request):
 
 
 def order_summary(request, order_id):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         current_order = Orders.objects.filter(order_id=order_id)[0]
         if current_order.user.id == request.session['uid'] or current_order.seller_address == user.account_address:
@@ -214,7 +214,7 @@ def order_summary(request, order_id):
 
 
 def user_profile(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         account_address = ""
         farmer_balance = ""
         amount_withdrawable = ""
@@ -233,7 +233,7 @@ def user_profile(request):
 
 
 def add_good(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         if user.group.name == "Farmer": 
             return render(request, "farmers/addItem.html")
@@ -271,7 +271,7 @@ def save_good(request):
 
 
 def farmer_home(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         if user.group.name == "Farmer":
             return render(request, "farmers/index.html", {"farmerAddress": user.account_address})
@@ -279,7 +279,7 @@ def farmer_home(request):
 
 
 def farmer_withdraw(request, acc_address):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user_acc = WebUser.objects.filter(id=request.session['uid'])[0].account_address
         if user_acc == acc_address:
             nonce = web.eth.get_transaction_count(web.toChecksumAddress(web.eth.default_account))
@@ -301,7 +301,7 @@ def farmer_withdraw(request, acc_address):
 
 
 def order_delivered(request, order_id):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         curr_order = Orders.objects.filter(order_id=order_id)[0]
         if user.group.name == "Farmer" and curr_order.seller_address == user.account_address:
@@ -321,7 +321,7 @@ def order_delivered(request, order_id):
 
 
 def dashboard(request):
-    if authe.current_user is not None:
+    if request.session.get('uid') is not None:
         user = WebUser.objects.filter(id=request.session['uid'])[0]
         if user.group.name == "Farmer":
             return render(request, "farmers/dashboard.html")

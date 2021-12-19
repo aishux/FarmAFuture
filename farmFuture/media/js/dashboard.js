@@ -22,7 +22,7 @@ function getWeatherDetails(){
       var temp = data.main.temp - 273.1
       $('#temp').html(temp.toFixed(2) + " °C");
       $('#humi').html(data.main.humidity + "%");
-      $('#wind').html(data.wind.speed * 3.6 + " Km/Hr");
+      $('#wind').html((data.wind.speed * 3.6).toFixed(2) + " Km/Hr");
       $('#cond').html(data.weather[0].description);
     }
   });
