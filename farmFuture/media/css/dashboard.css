@@ -1,0 +1,358 @@
+/**
+  Variables
+*/
+/* colors */
+/**
+  Styles
+*/
+::-moz-selection {
+  background-color: none;
+}
+::selection {
+  background-color: none;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  align-items: center;
+  background: linear-gradient(to right, #0196c0, #07c4cb);
+  background-image: url("https://image.freepik.com/free-photo/top-view-minimal-tropical-leaves-composition_23-2148955740.jpg");
+  display: flex;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.dashboard {
+  background-color: #1b2e58;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.39);
+  height: 700px;
+  overflow: hidden;
+  width: 90%;
+  /* End Styles Header */
+}
+.dashboard header {
+  align-items: center;
+  background-color: #1b2e58;
+  display: flex;
+  font-family: "Amiko", sans-serif;
+  height: 4em;
+  padding: 0.5em 0 0.5em 1.5em;
+}
+.dashboard header .logo {
+  margin-right: 4em;
+}
+.dashboard header .menu {
+  margin-right: auto;
+}
+.dashboard header .menu ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding-top: 0.6em;
+}
+.dashboard header .menu ul li {
+  margin: 0 3em 0 0;
+  padding: 0;
+  display: flex;
+}
+.dashboard header .menu ul li:first-child a,
+.dashboard header .menu ul li:first-child i {
+  color: #fff;
+}
+.dashboard header .menu ul li:last-child {
+  position: relative;
+}
+.dashboard header .menu ul li:last-child:after {
+  border-radius: 50%;
+  content: "";
+  height: 12px;
+  left: 52px;
+  position: absolute;
+  top: -4px;
+  width: 12px;
+}
+.dashboard header .menu ul li a {
+  color: #b3b3b3;
+  display: inline-block;
+  outline: none;
+  padding-right: 0.5em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.dashboard header .menu ul li i {
+  color: #b3b3b3;
+  font-size: 20px;
+  transition: all 0.2s;
+}
+.dashboard header .menu ul li:hover, .dashboard header .menu ul li > :hover, .dashboard header .menu ul li > :active {
+  cursor: pointer;
+  color: #fff;
+}
+.dashboard header .user-container {
+  box-sizing: border-box;
+}
+.dashboard header .user-container ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dashboard header .user-container ul li {
+  margin: 0 1em 0 0;
+  padding: 0;
+}
+.dashboard header .user-container ul li.user a {
+  display: block;
+  outline: none;
+}
+.dashboard header .user-container ul li.user a img {
+  border-radius: 50%;
+  height: 42px;
+  vertical-align: middle;
+  width: 42px;
+}
+.dashboard header .user-container ul li.user-dropdown {
+  align-items: center;
+  display: flex;
+}
+.dashboard header .user-container ul li.user-dropdown i {
+  color: #b3b3b3;
+  cursor: pointer;
+  font-size: 20px;
+  padding-top: 0.4em;
+}
+.dashboard .container {
+  background-color: gray;
+  display: flex;
+  height: 38em;
+}
+.dashboard .container .filters-container {
+  background-color: #17294d;
+  flex-basis: 20%;
+}
+.dashboard .container .filters-container ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dashboard .container .filters-container ul li {
+  align-items: center;
+  border-bottom: 1px solid #132344;
+  cursor: pointer;
+  display: flex;
+  padding: 1em 2em 1em 2em;
+}
+.dashboard .container .filters-container ul li.active {
+  padding: 1em 2em 1em 0;
+}
+.dashboard .container .filters-container ul li.active p {
+  border-left: 4px solid #78d6d6;
+  padding-left: 2em;
+}
+.dashboard .container .filters-container ul li:nth-child(1) {
+  align-items: flex-start;
+  cursor: default;
+  flex-direction: column;
+  padding: 1em 2em 1em 2em;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .filters-count {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .filters-count span.title-filter {
+  color: #fff;
+  margin-right: auto;
+  text-transform: uppercase;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .filters-count span.count {
+  color: #b3b3b3;
+  margin: 0 1em 0 1.5em;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .filters-count span.count label {
+  color: #01a9ae;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .filters-count button {
+  background-color: #01c2c7;
+  border: none;
+  border-radius: 0.2em;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.8em;
+  line-height: 2;
+  outline: none;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .searcher {
+  margin-top: 1em;
+  display: flex;
+  width: 100%;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .searcher input {
+  background-color: #12213d;
+  border: none;
+  border-radius: 0.4em;
+  box-sizing: border-box;
+  color: #e6e6e6;
+  font-family: "Amiko", sans-serif;
+  outline: none;
+  padding: 0.5em;
+  flex: auto;
+  padding: 0.8em;
+}
+.dashboard .container .filters-container ul li:nth-child(1) .searcher input[placeholder] {
+  color: #999999;
+}
+.dashboard .container .filters-container ul li p {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  margin-right: auto;
+}
+.dashboard .container .filters-container ul li p span.title {
+  color: #bfbfbf;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+.dashboard .container .filters-container ul li p span.info {
+  color: #fff;
+  margin-top: 0.5em;
+  text-transform: capitalize;
+}
+.dashboard .container .filters-container ul li p span.current {
+  color: #01a9ae;
+}
+.dashboard .container .filters-container ul li i {
+  color: #b3b3b3;
+}
+
+.dashboard .container .filters-container ul li:nth-child(5) p .info {
+  text-transform: uppercase;
+  width: 25%;
+  margin-right: 0.4em;
+}
+.dashboard .container .filters-container ul li:nth-child(5) p .state {
+  background-color: #12213d;
+  border: none;
+  border-radius: 0.4em;
+  box-sizing: border-box;
+  color: #e6e6e6;
+  font-family: "Amiko", sans-serif;
+  outline: none;
+  padding: 0.5em;
+  margin-right: 0.4em;
+  width: 30%;
+}
+.dashboard .container .filters-container ul li:nth-child(5) p .length {
+  background-color: #12213d;
+  border: none;
+  border-radius: 0.4em;
+  box-sizing: border-box;
+  color: #e6e6e6;
+  font-family: "Amiko", sans-serif;
+  outline: none;
+  padding: 0.5em;
+  width: 50%;
+}
+.dashboard .container .switch-selector {
+  background-color: #132344;
+  flex-basis: 1%;
+}
+.dashboard .container .switch-selector ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dashboard .container .switch-selector ul li {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 0.4em;
+  margin-bottom: 1em;
+}
+.dashboard .container .switch-selector ul li span.head-title {
+  color: #bfbfbf;
+}
+.dashboard .container .switch-selector ul li span {
+  color: #fff;
+  text-transform: uppercase;
+}
+.dashboard .container .switch-selector ul li:nth-child(2) {
+  border-left: 8px solid #fe6881;
+}
+.dashboard .container .switch-selector ul li:nth-child(3), .dashboard .container .switch-selector ul li:nth-child(4), .dashboard .container .switch-selector ul li:nth-child(7), .dashboard .container .switch-selector ul li:nth-child(8) {
+  border-left: 3px solid #755250;
+}
+.dashboard .container .switch-selector ul li:nth-child(5), .dashboard .container .switch-selector ul li:nth-child(6), .dashboard .container .switch-selector ul li:nth-child(9) {
+  border-left: 3px solid #793e5a;
+}
+.dashboard .container .switch-selector ul li:nth-child(10), .dashboard .container .switch-selector ul li:nth-child(11), .dashboard .container .switch-selector ul li:nth-child(12) {
+  border-left: 3px solid #0d5b72;
+}
+.dashboard .container .data-space {
+  background-color: #f8faf9;
+  flex: 70 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.dashboard .container .data-space .header {
+  background-color: #fff;
+  box-shadow: 0 0 0.2em lightgray;
+  height: 10%;
+}
+.dashboard .container .data-space .header h2 {
+  color: #33415c;
+  font-weight: 600;
+  font-size: 1.1em;
+  line-height: 2;
+  padding-left: 1.5em;
+  text-transform: uppercase;
+}
+.dashboard .container .data-space .charts-container {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: space-around;
+  padding: 1.5em;
+}
+.dashboard .container .data-space .charts-container .status-history {
+  background-color: #fff;
+  box-shadow: 0 0 1px lightgray;
+  height: 20%;
+}
+.dashboard .container .data-space .charts-container .status-history h2 {
+  color: #33415c;
+  font-weight: 600;
+  font-size: 1em;
+  line-height: 2;
+  padding-left: 1.5em;
+  text-transform: uppercase;
+}
+.dashboard .container .data-space .charts-container .last-mesurements {
+  background-color: #fff;
+  box-shadow: 0 0 1px lightgray;
+  height: 30%;
+  display: flex;
+  margin-top: 1em;
+  width: 100%;
+  height: 100%;
+}
+
+df-messenger {
+  --df-messenger-bot-message: #878fac;
+  --df-messenger-button-titlebar-color: #df9b56;
+  --df-messenger-chat-background-color: #fafafa;
+  --df-messenger-font-color: white;
+  --df-messenger-send-icon: #878fac;
+  --df-messenger-user-message: #479b3d;
+}

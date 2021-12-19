@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body style="background-image: url('https://image.freepik.com/free-photo/top-view-minimal-tropical-leaves-composition_23-2148955740.jpg');background-repeat: no-repeat;
+background-size: cover;">
+<div id="google_translate_element"></div>
+    <div class="card" style="width: 50%;
+    margin-left: 25%;
+    margin-top: 20%;">
+        <div class="card-body" style="text-align: center;">
+          {% if prediction %}
+          <h5 class="card-title">Suggested Crop From Your Choices is: </h5>
+          <h2 class="card-text">{{prediction}}</h2>
+          {% endif %}
+
+          <h5 class="card-title">Best Crop for these conditions is: </h5>
+          <h2 class="card-text">{{best_crop}}</h2>
+          <a href="{% url 'predictor' %}" class="card-link">Go Back</a>
+          <a href="{% url 'dashboard' %}" class="card-link">Dashboard</a>
+        </div>
+      </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	function googleTranslateElementInit() {
+		new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+	}
+</script>
+
+<script type="text/javascript"
+	src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</html>

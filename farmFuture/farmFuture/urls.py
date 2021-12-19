@@ -38,5 +38,7 @@ urlpatterns = [
     path('farmer/saveGood', views.save_good, name='savegood'),
     path('farmer/home', views.farmer_home, name='farmerhome'),
     path('farmer/withdraw/<str:acc_address>', views.farmer_withdraw, name='farmerhome'),
+    path('farmer/dashboard/', views.dashboard,name="dashboard"),
+    path('farmer/predictor/', views.predictor,name="predictor"),
     path('checkout/', views.checkout, name='checkout')
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

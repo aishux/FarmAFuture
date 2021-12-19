@@ -1,0 +1,160 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial;
+    background: #ECEEF1;
+    background-image: url("https://image.freepik.com/free-photo/top-view-minimal-tropical-leaves-composition_23-2148955740.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  form {
+    background: rgba(256,256,256,0.4);
+    color: #666;
+    min-width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
+    width: 50%;
+  }
+  
+  h2 {
+    padding-bottom: 50px;
+    text-align: center;
+  }
+  
+  .input-wrap {
+    width: 100%;
+    position: relative;
+  }
+  
+  label {
+    padding: 15px;
+  }
+  
+  .input-wrap > input, input[type="submit"] {
+    display: block;
+    width: 100%;
+    height: 40px;
+    margin: 5px auto 15px;
+    padding: 15px;
+    border: #666 solid 1px;
+    border-radius: 20px;
+    outline: none;
+    background: rgba(256,256,256,0.8);
+    font-size: 14px;
+  }
+  input:focus {
+    border: #3498db solid 1px;
+    background: rgba(256,256,256,1);
+  }
+  
+  .clear {
+    position: absolute;
+    top: 24px;
+    right: 10px;
+    padding: 10px;
+    cursor: pointer;
+    display: none;
+  }
+  .clear:hover {
+    font-weight: bold;
+  }
+  
+  input[type="submit"] {
+    font-size: 16px;
+    margin-top: 50px;
+    cursor: pointer;
+    color: #666;
+    background: white;
+    transition: color 0.4s, background 0.4s;
+    line-height: 0px;
+  }
+  input[type="submit"]:hover {
+    background: #666;
+    color: white;
+  }
+  
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background: #2c302d;
+}
+
+.card {
+  width: 60%;
+  height: 80%;
+  max-height: 300px;
+  padding: auto;
+  text-align: center;
+  background: #242625;
+  border-radius: 10px;
+  box-shadow: 25px 25px 50px #1b1c1b, -25px -25px 50px #2d302f;
+}
+.card__container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  color: white;
+}
+.card__content {
+  width: 90%;
+  height: 95%;
+  background: #191a19;
+  margin: 10px auto;
+  border-radius: 5px;
+  padding: 20px;
+  cursor: pointer;
+  box-shadow: 16px 16px 44px #0a0a0a, -16px -16px 44px #282a28;
+  transition: 0.3s all ease-in-out;
+}
+.card__content:hover {
+  margin-top: -10px;
+}
+.card__header {
+  text-transform: uppercase;
+  font-size: 20px;
+  margin: 40px auto;
+}
+.card__button {
+  padding: 10px;
+  border-radius: 50px;
+  background: #1f75c4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin: 50px auto;
+}
+
+.multiselect-dropdown-arrow{
+  display: none !important;
+}
+
+#choosen_crops_multiSelect{
+  width: 100% !important;
+  padding-bottom: 20px;
+}
+
+#choosen_crops_input{
+  padding: 10px;
+  border: #666 solid 1px;
+  border-radius: 20px;
+  outline: none;
+  background: rgba(256,256,256,0.8);
+}

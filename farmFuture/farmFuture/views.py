@@ -1,6 +1,8 @@
 import json
 import pyrebase
 import os
+import pickle
+import numpy as np
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
@@ -9,6 +11,7 @@ from farmapp.models import WebUser, Cart, Orders
 from django.contrib.auth import models
 from django.core.files.storage import default_storage
 from .utils import web, operations_contract, upload_to_ipfs, final_is_delivered, token_address
+from . import settings
 
 config = {
     'apiKey': "AIzaSyCByllLto91nY_iGjo36nFzFzlZ6QFZPBI",
@@ -315,3 +318,39 @@ def order_delivered(request, order_id):
 
         return HttpResponseRedirect(reverse("allorders"))
     return HttpResponse('Unauthorized', status=401)
+
+
+def dashboard(request):
+    if authe.current_user is not None:
+        user = WebUser.objects.filter(id=request.session['uid'])[0]
+        if user.group.name == "Farmer":
+            return render(request, "farmers/dashboard.html")
+    return HttpResponse('Unauthorized', status=401)
+
+
+def make_prediction(choosen_crops, nitrogen, phosphorous, pottasium, ph, humidity, temperature, rainfall):
+    data = np.array([[nitrogen, phosphorous, pottasium, ph, humidity, temperature, rainfall]])
+    loaded_model = pickle.load(open(settings.BASE_DIR / "PredictionModel.pkl", "rb"))
+    probs = loaded_model.predict_proba(data)
+    best_n = np.argsort(probs, axis=1)[0][::-1]
+    best_crop = loaded_model.classes_[best_n[0]]
+    if choosen_crops != []:
+        for i in best_n:
+            if loaded_model.classes_[i] in choosen_crops:
+                return [loaded_model.classes_[i], best_crop]
+    return [None, best_crop]
+
+
+def predictor(request):
+    if request.method == "POST":
+        nitrogen = int(request.POST.get("nitrogen"))
+        phosphorous = int(request.POST.get("phosphorous"))
+        pottasium = int(request.POST.get("pottasium"))
+        ph = int(request.POST.get("soilph"))
+        humidity = float(request.POST.get("humidity"))
+        temperature = float(request.POST.get("temperature"))
+        rainfall = float(request.POST.get("rainfall"))
+        choosen_crops = request.POST.getlist("choosen_crops")
+        prediction = make_prediction(choosen_crops, nitrogen, phosphorous, pottasium, ph, humidity, temperature, rainfall)
+        return render(request, "farmers/suggestion.html",{"best_crop": prediction[1], "prediction": prediction[0]})
+    return render(request,"farmers/Predictor.html")
