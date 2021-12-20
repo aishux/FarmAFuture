@@ -18,14 +18,14 @@ web.eth.default_account = web.eth.account.privateKeyToAccount(os.getenv("PRIVATE
 # Operations
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
 
-operations_abi = requests.get("https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x72D0dF28d35b1f4B70ddaf1103eDe46a7E8fe855&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG", headers=headers).json()['result']
+operations_abi = requests.get("https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x7d86bbFD06Af97782bc170B4800ef4cA14aa5C8b&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG", headers=headers).json()['result']
 
-operations_address = "0x72D0dF28d35b1f4B70ddaf1103eDe46a7E8fe855"
+operations_address = "0x7d86bbFD06Af97782bc170B4800ef4cA14aa5C8b"
 
 operations_contract = web.eth.contract(abi=operations_abi, address=operations_address)
 
 # Token
-token_address = "0x6fD362561e53F31FE9ddD31Caf721FAa62907781"
+token_address = "0x09BAF90d7E050f282bDa3fe55a0F5726fE629D51"
 
 
 def upload_to_ipfs(_image):

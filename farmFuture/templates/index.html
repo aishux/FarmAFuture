@@ -63,7 +63,7 @@ margin-top: 10px;
 <script src="/media/js/shop.js"></script>
 <script>
     var is_start;
-    $("#basicNavbar").append(`<button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
+    $("#basicNavbar").append(`<button type="button" style="background-color:#F0BB62;color:white" class="btn mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
 sagittis lacus vel augue laoreet rutrum faucibus.">
   Cart(<span id="cart">0</span>)
 </button>`);
@@ -82,7 +82,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
             price = document.getElementById("price" + idstr).innerHTML;
             image = document.getElementById("image" + idstr).getAttribute('src');
             cart[idstr] = [qty, name, price, image, seller];
-            document.getElementById('div' + idstr).innerHTML = `<button id="A${idst}" class="btn btn-primary cart" disabled>Added to cart</button>`;
+            document.getElementById('div' + idstr).innerHTML = `<button id="A${idst}" style="background-color:#F0BB62;color:white" class="btn cart" disabled>Added to cart</button>`;
             localStorage.setItem("farmer_in_cart",seller)
             updateCart(cart);
         }
@@ -109,7 +109,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
                 }
             }
         }
-        popstr = popstr + "</div> <a href='/cart'><button class='btn btn-primary' id='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id='clearcart'>Clear Cart</button>";
+        popstr = popstr + "</div> <a href='/cart'><button class='btn' style='background-color:#F0BB62;color:white' id='checkout'>View Cart</button></a> <button class='btn' style='background-color:#F0BB62;color:white'  onclick='clearCart()' id='clearcart'>Clear Cart</button>";
 
         document.getElementById('popcart').setAttribute('data-content', popstr);
         if (is_start != 0) {

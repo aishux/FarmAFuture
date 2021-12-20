@@ -1,8 +1,30 @@
+var current_user_account = ""
+var token_contract = ""
+var operations_contract = ""
+const address_token_contract = "0x09BAF90d7E050f282bDa3fe55a0F5726fE629D51"
+const address_farm_operations = "0x7d86bbFD06Af97782bc170B4800ef4cA14aa5C8b"
+
 const web = new Web3("https://rinkeby.infura.io/v3/384b2420ae804f5ca4b5d6aa630f3c7b")
-token_contract_details = JSON.parse(localStorage.getItem("token_contract"))
-operations_contract_details = JSON.parse(localStorage.getItem("operations_contract"))
-var token_contract = new web.eth.Contract(token_contract_details[0], token_contract_details[1])
-var operations_contract = new web.eth.Contract(operations_contract_details[0], operations_contract_details[1])
+
+
+$.ajax({
+    url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x09BAF90d7E050f282bDa3fe55a0F5726fE629D51&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
+    dataType: "json",
+    success: function (data) {
+        token_contract = new web.eth.Contract(JSON.parse(data.result), address_token_contract)
+        localStorage.setItem('token_contract', JSON.stringify([JSON.parse(data.result), address_token_contract]))
+    }
+});
+
+$.ajax({
+    url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x7d86bbFD06Af97782bc170B4800ef4cA14aa5C8b&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
+    dataType: "json",
+    success: function (data) {
+        operations_contract = new web.eth.Contract(JSON.parse(data.result), address_farm_operations)
+        getAllGoods()
+        localStorage.setItem('operations_contract', JSON.stringify([JSON.parse(data.result), address_farm_operations]))
+    }
+});
 
 getAllGoods()
 

@@ -1,14 +1,14 @@
 var current_user_account = ""
 var token_contract = ""
 var operations_contract = ""
-const address_token_contract = "0x6fD362561e53F31FE9ddD31Caf721FAa62907781"
-const address_farm_operations = "0x72D0dF28d35b1f4B70ddaf1103eDe46a7E8fe855"
+const address_token_contract = "0x09BAF90d7E050f282bDa3fe55a0F5726fE629D51"
+const address_farm_operations = "0x7d86bbFD06Af97782bc170B4800ef4cA14aa5C8b"
 
 const web = new Web3("https://rinkeby.infura.io/v3/384b2420ae804f5ca4b5d6aa630f3c7b")
 
 
 $.ajax({
-    url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x6fD362561e53F31FE9ddD31Caf721FAa62907781&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
+    url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x09BAF90d7E050f282bDa3fe55a0F5726fE629D51&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
     dataType: "json",
     success: function (data) {
         token_contract = new web.eth.Contract(JSON.parse(data.result), address_token_contract)
@@ -17,7 +17,7 @@ $.ajax({
 });
 
 $.ajax({
-    url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x72D0dF28d35b1f4B70ddaf1103eDe46a7E8fe855&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
+    url: "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0x7d86bbFD06Af97782bc170B4800ef4cA14aa5C8b&apikey=39MRYT8W4D35AH26BJZVGQ1KK19SR5XWXG",
     dataType: "json",
     success: function (data) {
         operations_contract = new web.eth.Contract(JSON.parse(data.result), address_farm_operations)
@@ -96,7 +96,7 @@ async function getAllGoods(){
                         <h5 style="font-weight: 900;text-transform: uppercase;font-size:30px;color: #064635;font-family: 'Open Sans Condensed';" class="card-title" id="namepr${curr_good["id"]}">${curr_good["name"]}</h5>
                         <p id="sellerpr${curr_good["id"]}" hidden>${curr_good["good_owner"]}</p>
                         <p style="font-family: 'Open Sans Condensed';font-size: 17px;opacity: 0.8;color:#519259" class="card-text">${curr_good["description"]}</p>
-                        <h6 class="card-text" style="font-weight: 800;color: #064635" id="pricepr${curr_good["id"]}">${curr_good["token_amount"] / (10**18)} AC</h6>
+                        <h6 class="card-text" style="font-weight: 800;color: #064635"><span id="pricepr${curr_good["id"]}"> ${curr_good["token_amount"] / (10**18)}</span> AC</h6>
                         <span id="divpr${curr_good["id"]}" class="divpr">
                             <button id="pr${curr_good["id"]}" onclick="addtoCart(this.id)" class="btn cart" style="background-color:#F0BB62;color:white">Add to cart</button></span>
                     </div>
